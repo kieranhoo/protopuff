@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package greeter;
+option go_package = "v1/greeter";
+
+import "google/api/annotations.proto";
+
+message MessageRequest {
+  string message = 1;
+  int64 timestamp = 2;
+}
+
+message StringMessage {
+  string value = 1;
+}
+
+// The response message containing the greetings
+message MessageReply {
+  string message = 1;
+  int64 timestamp = 2;
+}
+
+// The greeting service definition.
+service Greeter {
+  // Sends a greeting
+  rpc SayHello(MessageRequest) returns (MessageReply) {}
+  rpc HeathCheck(StringMessage) returns (StringMessage) {
+    option (google.api.http) = {
+      post: "/v1/common/heathcheck"
+      body: "*"
+    };
+  }
+}
