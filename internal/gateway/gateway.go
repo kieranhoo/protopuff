@@ -3,6 +3,7 @@ package gateway
 import (
 	"context"
 	"flag"
+	"fmt"
 
 	"protopuff/internal/gen/v1/greeter"
 
@@ -31,8 +32,12 @@ func New(httpUri string, grpcUri string) *Gateway {
 	}
 }
 
-func (g *Gateway) run() error {
-	ctx := context.Background()
+func (g *Gateway) prepareHttpServer() *Gateway {
+	GinMiddleware(g.gate)
+	return g
+}
+
+func (g *Gateway) run(ctx context.Context) error {
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
 
@@ -44,8 +49,11 @@ func (g *Gateway) run() error {
 	if err != nil {
 		return err
 	}
+
 	log.Info("grpc server registered with the following settings:")
 	log.Info("- listen", "[TCP]", g.grpc)
+	fmt.Println()
+
 	g.gate.Any("/*any", gin.WrapF(mux.ServeHTTP))
 	// Start HTTP server (and proxy calls to gRPC server endpoint)
 	return g.gate.Run(g.http)
@@ -53,5 +61,5 @@ func (g *Gateway) run() error {
 }
 
 func (g *Gateway) Serve() error {
-	return g.run()
+	return g.prepareHttpServer().run(context.Background())
 }

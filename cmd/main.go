@@ -1,8 +1,34 @@
 package main
 
-import "protopuff/internal/gateway"
+import (
+	"log"
+	"os"
+	"protopuff/cmd/app"
+	"sort"
+
+	"github.com/urfave/cli/v2"
+)
+
+func NewClient() *cli.App {
+	_app := &cli.App{
+		Name:        "protopuff",
+		Usage:       "grpc & http client",
+		Version:     "0.0.1",
+		Description: "gRPC & API server",
+		Commands:    app.Command,
+		// Flags:       module.Flag,
+	}
+
+	sort.Sort(cli.FlagsByName(_app.Flags))
+	sort.Sort(cli.CommandsByName(_app.Commands))
+
+	return _app
+}
 
 func main() {
-	gate := gateway.New("localhost:8000", "localhost:8080")
-	gate.Serve()
+	client := NewClient()
+
+	if err := client.Run(os.Args); err != nil {
+		log.Fatal(err)
+	}
 }

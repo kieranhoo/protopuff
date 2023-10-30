@@ -20,7 +20,7 @@ setup:
     google.golang.org/grpc/cmd/protoc-gen-go-grpc
 
 s:
-	go run cmd/main.go
+	go run cmd/main.go s
 
 w:
-	go run cmd/main.go
+	go run cmd/main.go w
