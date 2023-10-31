@@ -40,13 +40,6 @@ func ConnectionURLBuilder(n string) (string, error) {
 			config.RedisHost,
 			config.RedisPort,
 		)
-	case "fiber":
-		// URL for Fiber connection.
-		url = fmt.Sprintf(
-			"%s:%s",
-			config.Host,
-			config.Port,
-		)
 	default:
 		// Return error message.
 		return "", fmt.Errorf("connection name '%v' is not supported", n)

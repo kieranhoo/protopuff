@@ -8,10 +8,9 @@ import (
 
 // server environment variables
 var (
-	StageStatus       = os.Getenv("STAGE_STATUS")
-	Host              = os.Getenv("HOST")
-	Port              = os.Getenv("PORT")
-	ServerReadTimeout = os.Getenv("SERVER_READ_TIMEOUT")
+	StageStatus = os.Getenv("STAGE_STATUS")
+	HttpUri     = os.Getenv("HTTP_URI")
+	RpcUri      = os.Getenv("RPC_URI")
 )
 
 // authentication environment variables

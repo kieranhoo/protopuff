@@ -24,3 +24,6 @@ s:
 
 w:
 	go run cmd/main.go w
+
+client:
+	go run cmd/client/client.go

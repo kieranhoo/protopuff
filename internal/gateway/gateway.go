@@ -6,7 +6,6 @@ import (
 	"net"
 
 	"protopuff/internal/gen/v1/greeter"
-	"protopuff/internal/module/service"
 
 	"github.com/charmbracelet/log"
 	"github.com/gin-gonic/gin"
@@ -58,21 +57,27 @@ func (g *Gateway) run(ctx context.Context) error {
 	// return http.ListenAndServe(":8081", mux)
 }
 
-func (g *Gateway) startGrpcServer() *Gateway {
+func (g *Gateway) startGrpcServer(rpc func(*grpc.Server)) *Gateway {
 	listener, err := net.Listen("tcp", g.grpc)
 	if err != nil {
 		panic(err)
 	}
 	grpcServer := grpc.NewServer()
-	greeter.RegisterGreeterServer(grpcServer, service.NewGreeter())
-
-	fmt.Println()
+	rpc(grpcServer)
 	go grpcServer.Serve(listener)
 	return g
 }
 
-func (g *Gateway) Serve() error {
-	return g.prepareHttpServer().
-		startGrpcServer().
-		run(context.Background())
+// ServeGateway
+// rpc Example:
+//
+//	func registerGrpcServer(s *grpc.Server) {
+//		greeter.RegisterGreeterServer(s, service.NewGreeter())
+//	}
+func (g *Gateway) ServeGateway(rpc func(*grpc.Server)) error {
+	return g.prepareHttpServer().startGrpcServer(rpc).run(context.Background())
+}
+
+func (g *Gateway) ServeGrpcServer(rpc func(*grpc.Server)) {
+	g.startGrpcServer(rpc)
 }
