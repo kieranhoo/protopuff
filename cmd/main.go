@@ -4,10 +4,16 @@ import (
 	"log"
 	"os"
 	"protopuff/cmd/app"
+	"protopuff/internal/config"
+	"protopuff/pkg/x/worker"
 	"sort"
 
 	"github.com/urfave/cli/v2"
 )
+
+func init() {
+	worker.SetBroker(config.RedisHost, config.RedisPort, config.RedisPassword)
+}
 
 func NewClient() *cli.App {
 	_app := &cli.App{

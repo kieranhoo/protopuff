@@ -2,10 +2,11 @@ package gateway
 
 import (
 	"context"
-	"flag"
 	"fmt"
+	"net"
 
 	"protopuff/internal/gen/v1/greeter"
+	"protopuff/internal/module/service"
 
 	"github.com/charmbracelet/log"
 	"github.com/gin-gonic/gin"
@@ -15,20 +16,21 @@ import (
 )
 
 type Gateway struct {
-	gate               *gin.Engine
-	grpcServerEndpoint *string
-	http               string
-	grpc               string
+	gate *gin.Engine
+	http string
+	grpc string
 }
 
 func New(httpUri string, grpcUri string) *Gateway {
+	gin.SetMode(gin.ReleaseMode)
+	log.Info("Server registered with the following settings:")
+	log.Info("- HTTP", "[TCP]", httpUri)
+	log.Info("- gRPC", "[TCP]", grpcUri)
+	fmt.Println()
 	return &Gateway{
 		gate: gin.Default(),
-		// command-line options:
-		// gRPC server endpoint
-		grpcServerEndpoint: flag.String("grpc-server-endpoint", grpcUri, "gRPC server endpoint"),
-		http:               httpUri,
-		grpc:               grpcUri,
+		http: httpUri,
+		grpc: grpcUri,
 	}
 }
 
@@ -45,14 +47,10 @@ func (g *Gateway) run(ctx context.Context) error {
 	// Note: Make sure the gRPC server is running properly and accessible
 	mux := runtime.NewServeMux()
 	opts := []grpc.DialOption{grpc.WithTransportCredentials(insecure.NewCredentials())}
-	err := greeter.RegisterGreeterHandlerFromEndpoint(ctx, mux, *g.grpcServerEndpoint, opts)
+	err := greeter.RegisterGreeterHandlerFromEndpoint(ctx, mux, g.grpc, opts)
 	if err != nil {
 		return err
 	}
-
-	log.Info("grpc server registered with the following settings:")
-	log.Info("- listen", "[TCP]", g.grpc)
-	fmt.Println()
 
 	g.gate.Any("/*any", gin.WrapF(mux.ServeHTTP))
 	// Start HTTP server (and proxy calls to gRPC server endpoint)
@@ -60,6 +58,21 @@ func (g *Gateway) run(ctx context.Context) error {
 	// return http.ListenAndServe(":8081", mux)
 }
 
+func (g *Gateway) startGrpcServer() *Gateway {
+	listener, err := net.Listen("tcp", g.grpc)
+	if err != nil {
+		panic(err)
+	}
+	grpcServer := grpc.NewServer()
+	greeter.RegisterGreeterServer(grpcServer, service.NewGreeter())
+
+	fmt.Println()
+	go grpcServer.Serve(listener)
+	return g
+}
+
 func (g *Gateway) Serve() error {
-	return g.prepareHttpServer().run(context.Background())
+	return g.prepareHttpServer().
+		startGrpcServer().
+		run(context.Background())
 }

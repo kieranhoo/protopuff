@@ -1,0 +1,44 @@
+version: '3.1'
+services:
+  api-server:
+    image: scsystem:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env.prod
+    restart: always
+    command: "./bin/exe s"
+    networks:
+      - scsystem_api_network
+    ports:
+      - 8000:8000
+
+  worker:
+    image: scsystem:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env.prod
+    restart: always
+    networks:
+      - scsystem_api_network
+    command: "./bin/exe w"
+
+  redis:
+    image: redis
+    ports:
+      - 6379:6379
+    networks:
+      - scsystem_api_network
+    command: /bin/sh -c "redis-server --requirepass password"
+    environment:
+      - REDIS_HOST_PASSWORD=password
+    volumes:
+      - ./data/redis:/data
+
+networks:
+  scsystem_api_network:
+volumes:
+  data:
