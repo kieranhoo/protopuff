@@ -1,12 +1,12 @@
-package app
+package server
 
 import (
 	"protopuff/internal/config"
 	"protopuff/internal/gateway"
-	"protopuff/internal/gen/v1/greeter"
 	"protopuff/internal/module/service"
 	"protopuff/internal/module/tasks"
-	"protopuff/pkg/x/worker"
+	"protopuff/internal/proto/gen/v1/greeter"
+	"protopuff/pkg/worker"
 
 	"google.golang.org/grpc"
 )

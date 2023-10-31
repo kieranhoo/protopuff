@@ -1,5 +1,8 @@
-GENERATED_DIR=internal/gen
-PROTO_DIR=proto/service
+GENERATED_DIR=internal/proto/gen
+PROTO_DIR=internal/proto/service
+
+b:
+	go build -ldflags="-s -w" -o ./bin/exe ./cmd
 
 gen:
 	@if [ -d "$(GENERATED_DIR)" ]; then \
@@ -7,7 +10,7 @@ gen:
 	fi
 	mkdir -p $(GENERATED_DIR)
 
-	protoc --proto_path=proto --go_out=$(GENERATED_DIR) \
+	protoc --proto_path=internal/proto --go_out=$(GENERATED_DIR) \
     --go-grpc_out=$(GENERATED_DIR) \
 	--grpc-gateway_out $(GENERATED_DIR) \
     $(PROTO_DIR)/*.proto

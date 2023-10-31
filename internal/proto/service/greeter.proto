@@ -23,7 +23,12 @@ message MessageReply {
 // The greeting service definition.
 service Greeter {
   // Sends a greeting
-  rpc SayHello(MessageRequest) returns (MessageReply) {}
+  rpc SayHello(MessageRequest) returns (MessageReply) {
+    option (google.api.http) = {
+      post: "/v1/common/sayhello"
+      body: "*"
+    };
+  }
   rpc HeathCheck(StringMessage) returns (StringMessage) {
     option (google.api.http) = {
       post: "/v1/common/heathcheck"

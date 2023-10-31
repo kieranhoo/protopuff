@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net"
 
-	"protopuff/internal/gen/v1/greeter"
+	"protopuff/internal/proto/gen/v1/greeter"
 
 	"github.com/charmbracelet/log"
 	"github.com/gin-gonic/gin"

@@ -3,9 +3,9 @@ package main
 import (
 	"log"
 	"os"
-	"protopuff/cmd/app"
+	"protopuff/cmd/server"
 	"protopuff/internal/config"
-	"protopuff/pkg/x/worker"
+	"protopuff/pkg/worker"
 	"sort"
 
 	"github.com/urfave/cli/v2"
@@ -21,7 +21,7 @@ func NewClient() *cli.App {
 		Usage:       "grpc & http client",
 		Version:     "0.0.1",
 		Description: "gRPC & API server",
-		Commands:    app.Command,
+		Commands:    server.Command,
 		// Flags:       module.Flag,
 	}
 

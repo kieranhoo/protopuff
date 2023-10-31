@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   api-server:
-    image: scsystem:latest
+    image: protopuff:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -10,12 +10,12 @@ services:
     restart: always
     command: "./bin/exe s"
     networks:
-      - scsystem_api_network
+      - protopuff_network
     ports:
       - 8000:8000
 
   worker:
-    image: scsystem:latest
+    image: protopuff:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -23,7 +23,7 @@ services:
       - .env.prod
     restart: always
     networks:
-      - scsystem_api_network
+      - protopuff_network
     command: "./bin/exe w"
 
   redis:
@@ -31,7 +31,7 @@ services:
     ports:
       - 6379:6379
     networks:
-      - scsystem_api_network
+      - protopuff_network
     command: /bin/sh -c "redis-server --requirepass password"
     environment:
       - REDIS_HOST_PASSWORD=password
@@ -39,6 +39,6 @@ services:
       - ./data/redis:/data
 
 networks:
-  scsystem_api_network:
+  protopuff_network:
 volumes:
   data:

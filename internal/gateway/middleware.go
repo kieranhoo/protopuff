@@ -23,5 +23,4 @@ func CORSMiddleware() gin.HandlerFunc {
 
 func GinMiddleware(a *gin.Engine) {
 	a.Use(CORSMiddleware())
-	//a.Use(logger.SetLogger())
 }
