@@ -5,7 +5,7 @@ import (
 	"protopuff/internal/config"
 	"protopuff/internal/module/tasks"
 	"protopuff/internal/proto/gen/v1/greeter"
-	"protopuff/pkg/worker"
+	"protopuff/pkg/lib/worker"
 	"time"
 )
 

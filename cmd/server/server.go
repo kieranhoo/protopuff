@@ -1,14 +1,14 @@
 package server
 
 import (
+	"google.golang.org/grpc"
 	"protopuff/internal/config"
 	"protopuff/internal/gateway"
 	"protopuff/internal/module/service"
 	"protopuff/internal/module/tasks"
+	"protopuff/internal/proto/gen/v1/auth"
 	"protopuff/internal/proto/gen/v1/greeter"
-	"protopuff/pkg/worker"
-
-	"google.golang.org/grpc"
+	"protopuff/pkg/lib/worker"
 )
 
 func AsyncWorker(concurrency int) error {
@@ -23,9 +23,10 @@ func AsyncWorker(concurrency int) error {
 
 func registerGrpcServer(s *grpc.Server) {
 	greeter.RegisterGreeterServer(s, service.NewGreeter())
+	auth.RegisterAuthServer(s, service.NewAuth())
 }
 
 func APIGateway() error {
-	gate := gateway.New(config.HttpUri, config.RpcUri)
+	gate := gateway.New()
 	return gate.ServeGateway(registerGrpcServer)
 }

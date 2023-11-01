@@ -1,6 +1,8 @@
 package tasks
 
-import "protopuff/pkg/worker"
+import (
+	"protopuff/pkg/lib/worker"
+)
 
 const (
 	WorkerHealthCheck string = "Worker.HealthCheck"

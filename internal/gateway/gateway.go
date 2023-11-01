@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net"
 
+	"protopuff/internal/config"
 	"protopuff/internal/proto/gen/v1/greeter"
 
 	"github.com/charmbracelet/log"
@@ -20,16 +21,16 @@ type Gateway struct {
 	grpc string
 }
 
-func New(httpUri string, grpcUri string) *Gateway {
+func New() *Gateway {
 	gin.SetMode(gin.ReleaseMode)
 	log.Info("Server registered with the following settings:")
-	log.Info("- HTTP", "[TCP]", httpUri)
-	log.Info("- gRPC", "[TCP]", grpcUri)
+	log.Info("- HTTP", "[TCP]", config.HttpHost)
+	log.Info("- gRPC", "[TCP]", config.RpcHost)
 	fmt.Println()
 	return &Gateway{
 		gate: gin.Default(),
-		http: httpUri,
-		grpc: grpcUri,
+		http: config.HttpHost,
+		grpc: config.RpcHost,
 	}
 }
 

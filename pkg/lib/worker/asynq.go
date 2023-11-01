@@ -17,9 +17,9 @@ type Queue map[string]int
 type Path map[string]func(context.Context, *asynq.Task) error
 type Engine struct {
 	server *asynq.Server
-	mux    *asynq.ServeMux
-	path   Path
-	queue  Queue
+	mux   *asynq.ServeMux
+	path  Path
+	queue Queue
 }
 
 var broker asynq.RedisClientOpt

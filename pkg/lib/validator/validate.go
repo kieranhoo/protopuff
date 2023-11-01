@@ -11,6 +11,11 @@ var (
 	validate = validator.New()
 )
 
+type Response struct {
+	Success bool   `json:"success" validate:"required"`
+	Msg     string `json:"msg" validate:"required"`
+}
+
 type ErrorResponse struct {
 	Error       bool
 	FailedField string

@@ -17,12 +17,12 @@ type Client struct {
 }
 
 func New() *Client {
-	conn, err := grpc.Dial(config.RpcUri, grpc.WithTransportCredentials(insecure.NewCredentials()))
+	conn, err := grpc.Dial(config.HttpHost, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		panic(err)
 	}
 	return &Client{
-		address: config.RpcUri,
+		address: config.RpcHost,
 		conn:    conn,
 	}
 }

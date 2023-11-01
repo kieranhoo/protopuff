@@ -30,3 +30,6 @@ w:
 
 client:
 	go run cmd/client/client.go
+
+sqlc-setup:
+	go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest

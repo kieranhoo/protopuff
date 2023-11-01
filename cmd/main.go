@@ -5,7 +5,7 @@ import (
 	"os"
 	"protopuff/cmd/server"
 	"protopuff/internal/config"
-	"protopuff/pkg/worker"
+	"protopuff/pkg/lib/worker"
 	"sort"
 
 	"github.com/urfave/cli/v2"

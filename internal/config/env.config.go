@@ -9,8 +9,8 @@ import (
 // server environment variables
 var (
 	StageStatus = os.Getenv("STAGE_STATUS")
-	HttpUri     = os.Getenv("HTTP_URI")
-	RpcUri      = os.Getenv("RPC_URI")
+	HttpHost    = os.Getenv("HTTP_HOST")
+	RpcHost     = os.Getenv("RPC_HOST")
 )
 
 // authentication environment variables
