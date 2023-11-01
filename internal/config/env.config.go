@@ -36,11 +36,6 @@ var (
 	RedisPassword = os.Getenv("REDIS_PASSWORD")
 )
 
-// sentry environment variables
-var (
-	SentryDsn = os.Getenv("SENTRY_DSN")
-)
-
 // email
 var (
 	Email            = os.Getenv("EMAIL")
