@@ -25,13 +25,13 @@ service Greeter {
   // Sends a greeting
   rpc SayHello(MessageRequest) returns (MessageReply) {
     option (google.api.http) = {
-      post: "/v1/common/sayhello"
+      post: "/common/sayhello"
       body: "*"
     };
   }
   rpc HeathCheck(StringMessage) returns (StringMessage) {
     option (google.api.http) = {
-      post: "/v1/common/heathcheck"
+      post: "/common/heathcheck"
       body: "*"
     };
   }

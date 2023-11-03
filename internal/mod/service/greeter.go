@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 	"protopuff/internal/config"
-	"protopuff/internal/module/tasks"
+	"protopuff/internal/mod/tasks"
 	"protopuff/internal/proto/gen/v1/greeter"
 	"protopuff/pkg/lib/worker"
 	"time"

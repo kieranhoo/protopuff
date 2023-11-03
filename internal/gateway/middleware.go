@@ -1,7 +1,13 @@
 package gateway
 
 import (
+	"context"
+	"protopuff/pkg/utils"
+
 	"github.com/gin-gonic/gin"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 func CORSMiddleware() gin.HandlerFunc {
@@ -23,4 +29,19 @@ func CORSMiddleware() gin.HandlerFunc {
 
 func GinMiddleware(a *gin.Engine) {
 	a.Use(CORSMiddleware())
+}
+
+func GrpcLogger(
+	ctx context.Context,
+	req interface{},
+	info *grpc.UnaryServerInfo,
+	handler grpc.UnaryHandler,
+) (interface{}, error) {
+	result, errHandle := handler(ctx, req)
+	statusCode := codes.Unknown
+	if st, ok := status.FromError(errHandle); ok {
+		statusCode = st.Code()
+	}
+	utils.LogCallProcedure(info.FullMethod, statusCode.String())
+	return result, errHandle
 }

@@ -1,5 +1,5 @@
 GENERATED_DIR=internal/proto/gen
-PROTO_DIR=internal/proto/service
+PROTO_DIR=internal/proto
 
 b:
 	go build -ldflags="-s -w" -o ./bin/exe ./cmd
