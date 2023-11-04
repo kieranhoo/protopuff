@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 	"protopuff/internal/config"
-	"protopuff/internal/proto/gen/v1/greeter"
+	"protopuff/pkg/gen/v1/greeter"
 	"time"
 
 	"google.golang.org/grpc"

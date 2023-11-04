@@ -5,11 +5,11 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"protopuff/internal/mod/service"
+	"protopuff/pkg/gen/v1/greeter"
 	"time"
 
 	"protopuff/internal/config"
-	"protopuff/internal/mod/service"
-	"protopuff/internal/proto/gen/v1/greeter"
 
 	"github.com/charmbracelet/log"
 	"github.com/gin-gonic/gin"

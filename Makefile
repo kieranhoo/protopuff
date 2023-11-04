@@ -1,4 +1,4 @@
-GENERATED_DIR=internal/proto/gen
+GENERATED_DIR=pkg/gen
 PROTO_DIR=internal/proto
 
 b:
@@ -10,7 +10,7 @@ gen:
 	fi
 	mkdir -p $(GENERATED_DIR)
 
-	protoc --proto_path=internal/proto --go_out=$(GENERATED_DIR) \
+	protoc --proto_path=$(PROTO_DIR) --go_out=$(GENERATED_DIR) \
     --go-grpc_out=$(GENERATED_DIR) \
 	--grpc-gateway_out $(GENERATED_DIR) \
     $(PROTO_DIR)/*.proto
