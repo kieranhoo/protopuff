@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/charmbracelet/lipgloss v0.9.1
-	github.com/charmbracelet/log v0.2.5
+	github.com/charmbracelet/log v0.3.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-playground/validator/v10 v10.15.5
 	github.com/golang-jwt/jwt/v5 v5.0.0
@@ -70,6 +70,7 @@ require (
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/goleak v1.2.0 // indirect
 	golang.org/x/arch v0.3.0 // indirect
+	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
 	golang.org/x/net v0.17.0 // indirect
 	golang.org/x/sys v0.13.0 // indirect
 	golang.org/x/text v0.13.0 // indirect
